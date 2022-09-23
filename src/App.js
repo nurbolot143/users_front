@@ -1,15 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { AddBook, AddUser, Books, Home } from "./pages";
+import { AddBook, AddUser, Books, Home, User } from "./pages";
 
-import "./App.css";
+import "./App.scss";
+import { Header } from "./components";
 
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/user/:id" element={<User />} />
         <Route path="/books" element={<Books />} />
         <Route path="/add-user" element={<AddUser />} />
         <Route path="/add-book" element={<AddBook />} />
