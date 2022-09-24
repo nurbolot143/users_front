@@ -1,4 +1,3 @@
-export { Home } from "./Home/Home";
 export { Users } from "./Users/Users";
 export { User } from "./User/User";
 export { Books } from "./Books/Books";

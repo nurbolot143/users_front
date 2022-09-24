@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import {
   AddUserBook,
@@ -7,7 +7,6 @@ import {
   Books,
   Users,
   User,
-  Home,
   Book,
   AddBook,
 } from "./pages";
@@ -20,7 +19,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Navigate to="/users" />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<User />} />
         <Route path="/books" element={<Books />} />
