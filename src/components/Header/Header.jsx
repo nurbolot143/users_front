@@ -11,15 +11,15 @@ export const Header = () => {
   return <header className={style.header}>
     <div className="container">
       <div className={style.wrapper}>
-        <Link to='/home' className={style.logo}>Logo</Link>
+        <Link to='/' className={style.logo}>Logo</Link>
 
         <nav className={style.nav}>
           <NavLink
-            to='/home'
+            to='/users'
             className={({ isActive }) =>
               isActive ? activeLinkClass : linkClass
             }>
-            Home
+            Users
           </NavLink>
           <NavLink
             to='/books'

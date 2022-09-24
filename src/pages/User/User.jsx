@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Paper,
   TableHead,
@@ -48,7 +48,9 @@ export const User = () => {
           <div className={style.books}>
             <div className={style.books__header}>
               <h2>Books</h2>
-              <Button variant="contained" >Add Book</Button>
+              <Link to="/add-user-book" >
+                <Button variant="contained" >Add Book</Button>
+              </Link>
             </div>
             <TableContainer sx={{ height: 350, overflow: 'scroll' }}>
               <Table stickyHeader aria-label="sticky table">
