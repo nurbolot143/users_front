@@ -23,10 +23,6 @@
     padding-right: 10px;
   }
 
-  &:nth-last-child(2) span {
-    display: block;
-  }
-
   &:nth-last-child(2)::after {
     height: 0;
   }

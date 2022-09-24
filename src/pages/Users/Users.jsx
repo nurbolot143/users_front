@@ -1,42 +1,59 @@
 import React from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
-import ToolBar from '@mui/material/ToolBar';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
-import { User } from "../../components";
+import { UsersRow } from "../../components";
 
 import style from './users.module.scss'
+import { fetchUsers } from "../../redux/slices/users";
 
 export const Users = () => {
-
-  const navigage = useNavigate()
+  const dispath = useDispatch()
+  const navigate = useNavigate()
 
   const columns = [
-    { id: 'firstName', label: 'First Name', minWidth: 140 },
-    { id: 'lastName', label: 'Last Name', minWidth: 140 },
+    { id: 'first_name', label: 'First Name', minWidth: 140 },
+    { id: 'last_name', label: 'Last Name', minWidth: 140 },
     { id: 'age', label: 'Age', minWidth: 70 },
     { id: 'books', label: 'Books', minWidth: 270 },
-    { id: 'createdAt', label: 'Created At', minWidth: 120 },
-    { id: 'updatedAt', label: 'Updated At', minWidth: 120 },
+    { id: 'created_at', label: 'Created At', minWidth: 120 },
+    { id: 'updated_at', label: 'Updated At', minWidth: 120 },
   ];
 
-  const data = [
-    { id: 1, firstName: 'Nurbolot', lastName: 'Boobekov', age: 21, createdAt: '4840935', updatedAt: '49579754', books: 'dkjfos, fiojdsoi ...' },
-    { id: 2, firstName: 'Nurbolot', lastName: 'Boobekov', age: 21, createdAt: '4840935', updatedAt: '49579754', books: 'dkjfos, fiojdsoi ...' },
-    { id: 3, firstName: 'Nurbolot', lastName: 'Boobekov', age: 21, createdAt: '4840935', updatedAt: '49579754', books: 'dkjfos, fiojdsoi ...' },
-    { id: 4, firstName: 'Nurbolot', lastName: 'Boobekov', age: 21, createdAt: '4840935', updatedAt: '49579754', books: 'dkjfos, fiojdsoi ...' },
-    // { id: 5, firstName: 'Nurbolot', lastName: 'Boobekov', age: 21, createdAt: '4840935', updatedAt: '49579754', books: 'dkjfos, fiojdsoi ...' },
-    // { id: 6, firstName: 'Nurbolot', lastName: 'Boobekov', age: 21, createdAt: '4840935', updatedAt: '49579754', books: 'dkjfos, fiojdsoi ...' },
-    // { id: 7, firstName: 'Nurbolot', lastName: 'Boobekov', age: 21, createdAt: '4840935', updatedAt: '49579754', books: 'dkjfos, fiojdsoi ...' },
-  ]
+
+  const users = useSelector(store => store.users);
+  const isUsersLoading = users.status === 'loading'
+  const isUsersError = users.status === 'error'
+
+  useEffect(() => {
+    dispath(fetchUsers())
+  }, [])
+
+  const usersInfo = isUsersError ? null : isUsersLoading ? null : users.items.map((item) => {
+    return (
+      <TableRow
+        hover
+        key={item.id}
+        sx={{ cursor: 'pointer' }}
+        onClick={() => {
+          navigate(`/users/${item.id}`)
+        }}
+      >
+        <UsersRow columns={columns} item={item} />
+
+      </TableRow>
+    )
+  })
 
   return <section className={style.home}>
     <div className="container">
@@ -64,30 +81,9 @@ export const Users = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {
-                data.map((item) => {
-                  return (
-                    <TableRow
-                      hover
-                      key={item.id}
-                      sx={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        navigage(`/users/:${item.id}`)
-                      }}
-                    >
-                      {columns.map((column) => {
-                        const value = item[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {value}
-                          </TableCell>
-                        );
-                      })}
 
-                    </TableRow>
-                  )
-                })
-              }
+              {usersInfo}
+
             </TableBody>
           </Table>
         </TableContainer>
